@@ -1,4 +1,4 @@
-package com.meowmakers.pixel.ui.theme
+package com.meowmakers.pixel.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 

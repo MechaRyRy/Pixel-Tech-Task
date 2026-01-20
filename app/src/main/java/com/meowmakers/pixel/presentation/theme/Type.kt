@@ -1,4 +1,4 @@
-package com.meowmakers.pixel.ui.theme
+package com.meowmakers.pixel.presentation.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
