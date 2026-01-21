@@ -12,6 +12,7 @@ import com.meowmakers.pixel.PixelActivity
 import com.meowmakers.pixel.injection.MockResponse
 import com.meowmakers.pixel.injection.dependencies
 import io.ktor.client.engine.mock.respond
+import io.ktor.client.engine.mock.respondError
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
@@ -58,5 +59,28 @@ class TopUsersScreenTest {
 
         composeTestRule.onAllNodesWithTag("user_item")
             .assertCountEquals(5)
+    }
+
+    @Test
+    fun showsError_whenFetchingIsUnsuccessful() {
+        val dependencies = InstrumentationRegistry.getInstrumentation().dependencies()
+        dependencies.responseQueue.add(
+            MockResponse(
+                "/2.2/users",
+                { scope ->
+                    scope.respondError(HttpStatusCode.Forbidden)
+                }
+            )
+        )
+
+        composeTestRule
+            .onNodeWithTag("loading_spinner")
+            .assertIsDisplayed()
+
+        composeTestRule.waitUntil(timeoutMillis = 3000) {
+            composeTestRule
+                .onNodeWithTag("error_content")
+                .isDisplayed()
+        }
     }
 }
