@@ -30,7 +30,8 @@ fun PreviewLoadingContent(
     PixelApplication { innerPadding ->
         TopUsersScreenContent(
             modifier = Modifier.padding(innerPadding),
-            state = TopUsersScreenState.Loading
+            state = TopUsersScreenState.Loading,
+            onRetry = {}
         )
     }
 }

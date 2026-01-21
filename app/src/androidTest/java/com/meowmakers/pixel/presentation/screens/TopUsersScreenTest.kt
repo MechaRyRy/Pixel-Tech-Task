@@ -117,6 +117,11 @@ class TopUsersScreenTest {
             .onNodeWithTag("try_again")
             .performClick()
 
+        composeTestRule.waitUntilExactlyOneExists(
+            hasTestTag("loaded_content"),
+            timeoutMillis = 3000
+        )
+
         composeTestRule.onAllNodesWithTag("user_item")
             .assertCountEquals(5)
 

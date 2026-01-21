@@ -20,17 +20,18 @@ fun TopUsersScreen(
     val state by viewModel.state.collectAsState()
     TopUsersScreenContent(
         modifier,
-        state
+        state,
+        onRetry = { viewModel.loadData() }
     )
 }
 
 @Composable
-fun TopUsersScreenContent(modifier: Modifier, state: TopUsersScreenState) {
+fun TopUsersScreenContent(modifier: Modifier, state: TopUsersScreenState, onRetry: () -> Unit) {
     when (state) {
         is TopUsersScreenState.Error -> ErrorContent(
             modifier = modifier,
             errorMessage = state.errorMessage,
-            onRetry = {}
+            onRetry = onRetry
         )
 
         TopUsersScreenState.Loading -> LoadingContent(modifier)

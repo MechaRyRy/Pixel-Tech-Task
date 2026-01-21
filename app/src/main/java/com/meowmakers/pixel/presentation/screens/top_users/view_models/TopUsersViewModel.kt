@@ -18,21 +18,23 @@ class TopUsersViewModel(
     val state: StateFlow<TopUsersScreenState> = _state.asStateFlow()
 
     init {
-        viewModelScope.launch {
-            delay(2000)
-            val response = getTopUsersUseCase.get()
-            response.fold(
-                onFailure = { error ->
-                    _state.value = TopUsersScreenState.Error(
-                        error.message ?: "Unknown error"
-                    )
-                },
-                onSuccess = { topUsers ->
-                    _state.value = TopUsersScreenState.Loaded(
-                        users = topUsers
-                    )
-                }
-            )
-        }
+        loadData()
+    }
+
+    fun loadData() = viewModelScope.launch {
+        delay(2000)
+        val response = getTopUsersUseCase.get()
+        response.fold(
+            onFailure = { error ->
+                _state.value = TopUsersScreenState.Error(
+                    error.message ?: "Unknown error"
+                )
+            },
+            onSuccess = { topUsers ->
+                _state.value = TopUsersScreenState.Loaded(
+                    users = topUsers
+                )
+            }
+        )
     }
 }

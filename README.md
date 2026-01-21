@@ -87,4 +87,5 @@ implemented tests over the whole system.
 
 For unit / UI tests everything is real except for the system boundaries of the application. There's
 a custom Android test runner that deliberately switches the manual dependency injection graph to a
-Test implementation that mocks the internals of the ktor rest client.
+Test implementation that mocks the internals of the ktor rest client. I've also introduced a dequeue
+mechanism to the test dependency graph developers can state what response they want for a given request.
