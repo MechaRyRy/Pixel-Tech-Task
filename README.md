@@ -76,3 +76,15 @@ Provider, but I found it incredibly difficult to work with, it was breaking for 
 A snapshot of the API data is stored in a debug source-set and loaded in the composable previews.
 This allows developers to start thinking about how the data might be structured right away, and how
 to deal with different states.
+
+#### Testing
+
+> Your code should be covered by unit tests.
+
+This application is predominantly tested using Android UI tests, I have included a couple of "unit
+tests" to demonstrate how they differ from an Android UI test, but for brevity I have not
+implemented tests over the whole system.
+
+For unit / UI tests everything is real except for the system boundaries of the application. There's
+a custom Android test runner that deliberately switches the manual dependency injection graph to a
+Test implementation that mocks the internals of the ktor rest client.
