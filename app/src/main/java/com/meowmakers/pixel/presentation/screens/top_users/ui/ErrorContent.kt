@@ -61,7 +61,7 @@ fun ErrorContent(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        Button(onClick = onRetry) {
+        Button(modifier = Modifier.testTag("try_again"), onClick = onRetry) {
             Text("Try Again")
         }
     }

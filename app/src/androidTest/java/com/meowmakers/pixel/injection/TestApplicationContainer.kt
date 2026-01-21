@@ -26,7 +26,7 @@ class TestApplicationContainer : ApplicationContainer {
 
     private val mockEngine: MockEngine by lazy {
         MockEngine { request ->
-            val mockResponse = responseQueue.firstOrNull()
+            val mockResponse = responseQueue.removeFirstOrNull()
             when (request.url.encodedPath) {
                 mockResponse?.forPath -> {
                     mockResponse.respondWith(this)
