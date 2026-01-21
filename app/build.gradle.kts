@@ -11,6 +11,12 @@ android {
         version = release(36)
     }
 
+    sourceSets {
+        getByName("debug") {
+            java.srcDirs("src/debug/kotlin")
+        }
+    }
+
     defaultConfig {
         applicationId = "com.meowmakers.pixel"
         minSdk = 24

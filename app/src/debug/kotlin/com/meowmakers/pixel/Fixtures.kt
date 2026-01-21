@@ -1,4 +1,13 @@
-{
+package com.meowmakers.pixel
+
+import kotlinx.serialization.json.Json
+
+class Fixture(val raw: String)
+
+object Fixtures {
+    val topUsersJson: Fixture = Fixture(
+        """
+        {
   "items": [
     {
       "badge_counts": {
@@ -132,4 +141,15 @@
   "has_more": true,
   "quota_max": 300,
   "quota_remaining": 298
+}
+    """
+    )
+}
+
+val json = Json {
+    ignoreUnknownKeys = true
+}
+
+inline fun <reified T> Fixture.load(): T {
+    return json.decodeFromString<T>(this.raw)
 }

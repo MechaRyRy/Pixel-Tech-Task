@@ -2,7 +2,6 @@
 
 package com.meowmakers.pixel.presentation.screens
 
-import AssetLoader
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -20,17 +19,16 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.meowmakers.pixel.Fixtures
 import com.meowmakers.pixel.PixelApplication
+import com.meowmakers.pixel.load
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonNames
 
 @Composable
@@ -88,16 +86,9 @@ fun TopUsersScreen(modifier: Modifier, items: List<TopUser>) {
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewTopUsersScreen() {
-    val context = LocalContext.current
-    val rawJson = AssetLoader.loadJsonFromAssets(context, "sample_top_users.json")
-
-    val users = remember {
-        val json = Json {
-            ignoreUnknownKeys = true
-        }
-        json.decodeFromString<TopUsers>(rawJson)
-    }
+fun PreviewTopUsersScreen(
+) {
+    val users = Fixtures.topUsersJson.load<TopUsers>()
 
     PixelApplication { innerPadding ->
         TopUsersScreen(
