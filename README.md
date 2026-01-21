@@ -53,13 +53,13 @@ icons.
 - **Presentation**
     - Theming
     - Screens
-        - View Models 
+        - View Models
         - UI
-           - Top Level Screen UI
-           - Loading Screen State UI
-           - Loaded Screen State UI
-           - Error Screen State UI
-    
+            - Top Level Screen UI
+            - Loading Screen State UI
+            - Loaded Screen State UI
+            - Error Screen State UI
+
 - **Domain**
 - **Data**
 

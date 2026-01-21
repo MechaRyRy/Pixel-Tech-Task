@@ -24,7 +24,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.meowmakers.pixel.Fixtures
 import com.meowmakers.pixel.PixelApplication
+import com.meowmakers.pixel.domain.entities.TopUser
+import com.meowmakers.pixel.domain.entities.TopUsers
 import com.meowmakers.pixel.load
+import com.meowmakers.pixel.presentation.screens.top_users.view_models.TopUsersScreenState
 
 @Composable
 fun LoadedContent(modifier: Modifier, items: List<TopUser>) {

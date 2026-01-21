@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.meowmakers.pixel.PixelApplication
+import com.meowmakers.pixel.presentation.screens.top_users.view_models.TopUsersScreenState
 
 @Composable
 fun LoadingContent(modifier: Modifier) {

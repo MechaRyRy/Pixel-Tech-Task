@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.meowmakers.pixel.PixelApplication
+import com.meowmakers.pixel.presentation.screens.top_users.view_models.TopUsersScreenState
 
 @Composable
 fun ErrorContent(
