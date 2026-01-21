@@ -8,9 +8,9 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.meowmakers.pixel.presentation.screens.top_users.ui.TopUsersScreen
 import com.meowmakers.pixel.presentation.theme.PixelTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,8 +19,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             PixelApplication({ innerPadding ->
-                Greeting(
-                    name = "Ryan", modifier = Modifier.padding(innerPadding)
+                TopUsersScreen(
+                    modifier = Modifier.padding(innerPadding)
                 )
             })
         }
@@ -34,11 +34,4 @@ fun PixelApplication(content: @Composable (PaddingValues) -> Unit) {
             content(innerPadding)
         }
     }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!", modifier = modifier
-    )
 }

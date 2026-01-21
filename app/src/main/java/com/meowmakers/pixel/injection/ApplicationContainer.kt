@@ -1,5 +1,8 @@
 package com.meowmakers.pixel.injection
 
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
+import com.meowmakers.pixel.PixelApplication
 import com.meowmakers.pixel.data.data_sources.rest.KtorRestClient
 import com.meowmakers.pixel.data.data_sources.rest.RestClient
 import io.ktor.client.HttpClient
@@ -37,3 +40,7 @@ class ApplicationContainer {
     }
 
 }
+
+val AppContainer: ApplicationContainer
+    @Composable
+    get() = (LocalContext.current.applicationContext as PixelApplication).applicationContainer

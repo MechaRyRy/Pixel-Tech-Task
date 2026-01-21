@@ -85,7 +85,7 @@ fun PreviewLoadedContent(
     val users = Fixtures.topUsersJson.load<TopUsers>()
 
     PixelApplication { innerPadding ->
-        TopUsersScreen(
+        TopUsersScreenContent(
             modifier = Modifier.padding(innerPadding),
             state = TopUsersScreenState.Loaded(users)
         )

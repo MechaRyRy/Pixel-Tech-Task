@@ -70,7 +70,7 @@ fun ErrorContent(
 fun PreviewErrorContent(
 ) {
     PixelApplication { innerPadding ->
-        TopUsersScreen(
+        TopUsersScreenContent(
             modifier = Modifier.padding(innerPadding),
             state = TopUsersScreenState.Error(errorMessage = "Preview Error")
         )

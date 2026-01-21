@@ -26,7 +26,7 @@ fun LoadingContent(modifier: Modifier) {
 fun PreviewLoadingContent(
 ) {
     PixelApplication { innerPadding ->
-        TopUsersScreen(
+        TopUsersScreenContent(
             modifier = Modifier.padding(innerPadding),
             state = TopUsersScreenState.Loading
         )
