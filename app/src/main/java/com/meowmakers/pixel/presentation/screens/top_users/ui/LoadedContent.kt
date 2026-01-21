@@ -40,6 +40,7 @@ fun LoadedContent(modifier: Modifier, items: List<TopUser>) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(64.dp)
+                    .testTag("user_item")
             ) {
                 Row(
                     modifier = Modifier

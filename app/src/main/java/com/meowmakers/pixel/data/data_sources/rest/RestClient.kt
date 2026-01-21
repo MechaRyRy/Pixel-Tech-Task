@@ -12,7 +12,7 @@ abstract class RestClient {
 
     suspend inline fun <reified T> request(
         uri: Uri,
-        body: Body,
+        body: Body = Body.None,
         method: HttpMethod = HttpMethod.Get,
         authorization: Authorization = Authorization.None
     ): RestResponse<T> = executeRequest(uri, body, method, authorization, typeOf<T>())

@@ -1,8 +1,10 @@
 package com.meowmakers.pixel
 
+import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.isDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithTag
 import org.junit.Rule
 import org.junit.Test
@@ -30,5 +32,8 @@ class TopUsersScreenTest {
                 .onNodeWithTag("loaded_content")
                 .isDisplayed()
         }
+
+        composeTestRule.onAllNodesWithTag("user_item")
+            .assertCountEquals(5)
     }
 }
