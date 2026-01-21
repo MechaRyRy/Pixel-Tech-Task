@@ -1,4 +1,4 @@
-package com.meowmakers.pixel
+package com.meowmakers.pixel.presentation.screens
 
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
@@ -6,6 +6,7 @@ import androidx.compose.ui.test.isDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithTag
+import com.meowmakers.pixel.PixelActivity
 import org.junit.Rule
 import org.junit.Test
 
