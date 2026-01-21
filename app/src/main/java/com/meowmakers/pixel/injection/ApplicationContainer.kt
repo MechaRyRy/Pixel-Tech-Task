@@ -52,8 +52,6 @@ class ProdApplicationContainer : ApplicationContainer {
     override val getTopUsersUseCase: GetTopUsersUseCase by lazy {
         GetTopUsersUseCase(repository)
     }
-
-
 }
 
 val AppContainer: ApplicationContainer

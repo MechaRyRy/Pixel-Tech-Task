@@ -1,6 +1,7 @@
 package com.meowmakers.pixel.injection
 
-import com.meowmakers.pixel.Fixtures
+import android.app.Instrumentation
+import com.meowmakers.pixel.TestPixelApplication
 import com.meowmakers.pixel.data.data_sources.rest.KtorRestClient
 import com.meowmakers.pixel.data.data_sources.rest.RestClient
 import com.meowmakers.pixel.data.repositories.StackOverflowRepositoryImpl
@@ -8,25 +9,27 @@ import com.meowmakers.pixel.domain.repositories.StackOverflowRepository
 import com.meowmakers.pixel.domain.usecases.GetTopUsersUseCase
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
-import io.ktor.client.engine.mock.respond
+import io.ktor.client.engine.mock.MockRequestHandleScope
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.http.HttpHeaders
-import io.ktor.http.HttpStatusCode
-import io.ktor.http.headersOf
+import io.ktor.client.request.HttpResponseData
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
+class MockResponse(
+    val forPath: String,
+    val respondWith: (MockRequestHandleScope) -> HttpResponseData
+)
+
 class TestApplicationContainer : ApplicationContainer {
+
+    val responseQueue = ArrayDeque<MockResponse>()
 
     private val mockEngine: MockEngine by lazy {
         MockEngine { request ->
+            val mockResponse = responseQueue.firstOrNull()
             when (request.url.encodedPath) {
-                "/2.2/users" -> {
-                    respond(
-                        content = Fixtures.topUsersJson.raw,
-                        status = HttpStatusCode.OK,
-                        headers = headersOf(HttpHeaders.ContentType, "application/json")
-                    )
+                mockResponse?.forPath -> {
+                    mockResponse.respondWith(this)
                 }
 
                 else -> error("Unhandled ${request.url.encodedPath}")
@@ -58,4 +61,10 @@ class TestApplicationContainer : ApplicationContainer {
         GetTopUsersUseCase(repository)
     }
 
+}
+
+fun Instrumentation.dependencies(): TestApplicationContainer {
+    val appContext = targetContext.applicationContext
+    val app = appContext as TestPixelApplication
+    return app.container as TestApplicationContainer
 }
