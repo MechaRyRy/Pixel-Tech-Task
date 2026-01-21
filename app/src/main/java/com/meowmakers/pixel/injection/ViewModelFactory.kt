@@ -8,7 +8,7 @@ class ViewModelFactory(private val container: ApplicationContainer) : ViewModelP
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(TopUsersViewModel::class.java)) {
-            return TopUsersViewModel(container.repository) as T
+            return TopUsersViewModel(container.getTopUsersUseCase) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
