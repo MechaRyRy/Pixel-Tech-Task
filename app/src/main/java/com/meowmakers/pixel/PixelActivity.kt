@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import com.meowmakers.pixel.presentation.screens.top_users.ui.TopUsersScreen
 import com.meowmakers.pixel.presentation.theme.PixelTheme
 
-class MainActivity : ComponentActivity() {
+class PixelActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

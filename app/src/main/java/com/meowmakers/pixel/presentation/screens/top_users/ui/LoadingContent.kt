@@ -7,6 +7,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import com.meowmakers.pixel.PixelApplication
 import com.meowmakers.pixel.presentation.screens.top_users.view_models.TopUsersScreenState
@@ -14,7 +15,8 @@ import com.meowmakers.pixel.presentation.screens.top_users.view_models.TopUsersS
 @Composable
 fun LoadingContent(modifier: Modifier) {
     Box(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize()
+            .testTag("loading_spinner"),
         contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator()

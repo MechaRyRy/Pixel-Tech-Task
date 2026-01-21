@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.meowmakers.pixel.Fixtures
@@ -31,7 +32,7 @@ import com.meowmakers.pixel.presentation.screens.top_users.view_models.TopUsersS
 
 @Composable
 fun LoadedContent(modifier: Modifier, items: List<TopUser>) {
-    LazyColumn(modifier) {
+    LazyColumn(modifier.testTag("loaded_content")) {
         items(count = items.size, key = { items[it].id }, itemContent = { index ->
             val item = items[index]
             Spacer(Modifier.height(20.dp))
