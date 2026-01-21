@@ -29,7 +29,7 @@ abstract class RestClient {
 
 sealed class RestResponse<T> {
     data class Success<T>(val value: T) : RestResponse<T>()
-    data class Failure<T>(val message: String) : RestResponse<T>()
+    data class Failure<T>(val error: Throwable) : RestResponse<T>()
 }
 
 enum class HttpMethod {

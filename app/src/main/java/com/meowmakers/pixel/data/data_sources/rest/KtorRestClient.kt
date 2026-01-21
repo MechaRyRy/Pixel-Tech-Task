@@ -44,7 +44,7 @@ class KtorRestClient(
             )
             return RestResponse.Success(response.call.body(typeInfo) as T)
         } catch (e: Exception) {
-            return RestResponse.Failure(message = e.message ?: "Unknown error")
+            return RestResponse.Failure(error = e)
         }
     }
 }
