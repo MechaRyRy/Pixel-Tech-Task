@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.meowmakers.pixel.domain.usecases.FetchTopUsersUseCase
 import com.meowmakers.pixel.domain.usecases.ObserveTopUsersUseCase
+import com.meowmakers.pixel.domain.usecases.ToggleFavoriteUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,6 +13,7 @@ import kotlinx.coroutines.launch
 class TopUsersViewModel(
     private val observeTopUsersUseCase: ObserveTopUsersUseCase,
     private val fetchTopUsersUseCase: FetchTopUsersUseCase,
+    private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<TopUsersScreenState> =
@@ -45,5 +47,9 @@ class TopUsersViewModel(
     fun retry() = viewModelScope.launch {
         _state.value = TopUsersScreenState.Loading
         fetchTopUsersUseCase.fetch()
+    }
+
+    fun toggleFavorite(id: String, currentValue: Boolean) = viewModelScope.launch {
+        toggleFavoriteUseCase.toggleFavorite(id, currentValue)
     }
 }

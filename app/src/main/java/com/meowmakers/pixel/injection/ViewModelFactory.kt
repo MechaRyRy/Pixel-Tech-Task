@@ -11,7 +11,8 @@ class ViewModelFactory(private val container: ApplicationContainer) : ViewModelP
         if (modelClass.isAssignableFrom(TopUsersViewModel::class.java)) {
             return TopUsersViewModel(
                 observeTopUsersUseCase = container.observeTopUsersUseCase,
-                fetchTopUsersUseCase = container.fetchTopUsersUseCase
+                fetchTopUsersUseCase = container.fetchTopUsersUseCase,
+                toggleFavoriteUseCase = container.toggleFavoriteUseCase
             ) as T
         }
 

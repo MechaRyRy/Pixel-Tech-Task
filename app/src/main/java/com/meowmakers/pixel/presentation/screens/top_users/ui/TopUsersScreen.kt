@@ -27,7 +27,8 @@ fun TopUsersScreen(
         modifier,
         state,
         onRetry = { userViewModel.retry() },
-        loadImage = { imageLoaderViewModel.getImage(it) }
+        loadImage = { imageLoaderViewModel.getImage(it) },
+        toggleFavorite = { id, currentValue -> userViewModel.toggleFavorite(id, currentValue) }
     )
 }
 
@@ -36,7 +37,8 @@ fun TopUsersScreenContent(
     modifier: Modifier,
     state: TopUsersScreenState,
     onRetry: () -> Unit,
-    loadImage: LoadImageCallback
+    loadImage: LoadImageCallback,
+    toggleFavorite: ToggleFavorite
 ) {
     when (state) {
         is TopUsersScreenState.Error -> ErrorContent(
@@ -49,7 +51,8 @@ fun TopUsersScreenContent(
         is TopUsersScreenState.Loaded -> LoadedContent(
             modifier = modifier,
             items = state.users.items,
-            loadImage = loadImage
+            loadImage = loadImage,
+            toggleFavorite = toggleFavorite,
         )
     }
 }

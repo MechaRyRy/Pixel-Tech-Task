@@ -10,6 +10,7 @@ import com.meowmakers.pixel.domain.entities.TopUsers
 import com.meowmakers.pixel.domain.repositories.StackOverflowRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.combine
 
 class StackOverflowRepositoryImpl(
@@ -17,21 +18,20 @@ class StackOverflowRepositoryImpl(
     private val restClient: RestClient
 ) : StackOverflowRepository {
 
-    private val networkStateFlow: MutableSharedFlow<RestResponse<ApiTopUsers>> = MutableSharedFlow()
+    private val networkStateFlow: MutableSharedFlow<RestResponse<ApiTopUsers>> =
+        MutableSharedFlow(replay = 1)
 
-    override suspend fun observeTopUsers(): Flow<Result<TopUsers>> {
-        return combine(
-            networkStateFlow,
-            persistence.observeFavorites(),
-            { networkResult, favorites ->
-                when (networkResult) {
-                    is RestResponse.Failure<ApiTopUsers> -> Result.failure(networkResult.error)
-                    is RestResponse.Success<ApiTopUsers> -> Result.success(
-                        networkResult.value.toTopUsers(favorites)
-                    )
-                }
-            })
-    }
+    override val observeTopUsers: Flow<Result<TopUsers>> = combine(
+        networkStateFlow.asSharedFlow(),
+        persistence.observeFavorites(),
+        { networkResult, favorites ->
+            when (networkResult) {
+                is RestResponse.Failure<ApiTopUsers> -> Result.failure(networkResult.error)
+                is RestResponse.Success<ApiTopUsers> -> Result.success(
+                    networkResult.value.toTopUsers(favorites)
+                )
+            }
+        })
 
     override suspend fun fetchTopUsers() {
         val response = restClient.request<ApiTopUsers>(
@@ -46,4 +46,8 @@ class StackOverflowRepositoryImpl(
             is RestResponse.Success<ByteArray> -> Result.success(response.value)
         }
     }
+
+    override suspend fun addFavorite(id: String) = persistence.addFavorite(id)
+
+    override suspend fun removeFavorite(id: String) = persistence.removeFavorite(id)
 }

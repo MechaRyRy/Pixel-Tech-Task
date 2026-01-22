@@ -76,7 +76,8 @@ fun PreviewErrorContent(
             modifier = Modifier.padding(innerPadding),
             state = TopUsersScreenState.Error(errorMessage = "Preview Error"),
             onRetry = {},
-            loadImage = { null }
+            loadImage = { null },
+            toggleFavorite = { _, _ -> }
         )
     }
 }

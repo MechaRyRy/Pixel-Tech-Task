@@ -11,6 +11,7 @@ import com.meowmakers.pixel.domain.repositories.StackOverflowRepository
 import com.meowmakers.pixel.domain.usecases.FetchTopUsersUseCase
 import com.meowmakers.pixel.domain.usecases.LoadProfileImageUseCase
 import com.meowmakers.pixel.domain.usecases.ObserveTopUsersUseCase
+import com.meowmakers.pixel.domain.usecases.ToggleFavoriteUseCase
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.MockRequestHandleScope
@@ -75,6 +76,10 @@ class TestApplicationContainer : ApplicationContainer {
 
     override val loadProfileImageUseCase: LoadProfileImageUseCase by lazy {
         LoadProfileImageUseCase(repository)
+    }
+
+    override val toggleFavoriteUseCase: ToggleFavoriteUseCase by lazy {
+        ToggleFavoriteUseCase(repository)
     }
 }
 

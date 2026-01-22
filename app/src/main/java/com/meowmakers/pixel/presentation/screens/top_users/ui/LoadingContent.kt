@@ -32,7 +32,8 @@ fun PreviewLoadingContent(
             modifier = Modifier.padding(innerPadding),
             state = TopUsersScreenState.Loading,
             onRetry = {},
-            loadImage = { null }
+            loadImage = { null },
+            toggleFavorite = { _, _ -> }
         )
     }
 }

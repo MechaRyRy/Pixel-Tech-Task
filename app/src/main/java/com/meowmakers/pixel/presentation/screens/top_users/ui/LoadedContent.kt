@@ -18,10 +18,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -36,15 +32,17 @@ import com.meowmakers.pixel.presentation.design_system.network_image.LoadImageCa
 import com.meowmakers.pixel.presentation.design_system.network_image.NetworkImage
 import com.meowmakers.pixel.presentation.screens.top_users.view_models.TopUsersScreenState
 
+typealias ToggleFavorite = (id: String, currentValue: Boolean) -> Unit
+
 @Composable
 fun LoadedContent(
     modifier: Modifier,
     items: List<TopUser>,
-    loadImage: LoadImageCallback
+    loadImage: LoadImageCallback,
+    toggleFavorite: ToggleFavorite
 ) {
     LazyColumn(modifier.testTag("loaded_content")) {
         items(count = items.size, key = { items[it].id }, itemContent = { index ->
-            var isLiked by remember { mutableStateOf(false) }
             val item = items[index]
             Spacer(Modifier.height(20.dp))
             Card(
@@ -85,19 +83,23 @@ fun LoadedContent(
 
                     Spacer(modifier = Modifier.weight(1f))
 
-                    FilledIconToggleButton(checked = isLiked, onCheckedChange = { isLiked = it }) {
-                        if (isLiked) {
-                            Icon(
-                                Icons.Filled.Favorite,
-                                contentDescription = "Localized description"
-                            )
-                        } else {
-                            Icon(
-                                Icons.Outlined.FavoriteBorder,
-                                contentDescription = "Localized description"
-                            )
+                    FilledIconToggleButton(
+                        checked = item.following,
+                        onCheckedChange = { toggleFavorite(item.id, item.following) },
+                        content = {
+                            if (item.following) {
+                                Icon(
+                                    Icons.Filled.Favorite,
+                                    contentDescription = "Localized description"
+                                )
+                            } else {
+                                Icon(
+                                    Icons.Outlined.FavoriteBorder,
+                                    contentDescription = "Localized description"
+                                )
+                            }
                         }
-                    }
+                    )
                 }
             }
         })
@@ -115,7 +117,8 @@ fun PreviewLoadedContent(
             modifier = Modifier.padding(innerPadding),
             state = TopUsersScreenState.Loaded(users),
             onRetry = {},
-            loadImage = { null }
+            loadImage = { null },
+            toggleFavorite = { _, _ -> }
         )
     }
 }
