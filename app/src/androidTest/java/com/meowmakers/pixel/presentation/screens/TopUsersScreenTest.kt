@@ -150,7 +150,7 @@ class TopUsersScreenTest {
     }
 
     @Test
-    fun tappingAnUnfavoritedUser_willAddItAsFavorited() {
+    fun whenAUserIsNotFavorite_whenTappingFavoriteIcon_thenTheyAreAddedAsFavoriteUser() {
         dependencies.responseQueue.add(
             MockResponse(
                 "/2.2/users",
@@ -198,6 +198,74 @@ class TopUsersScreenTest {
             composeTestRule
                 .onNodeWithTag("11683_favorite")
                 .isDisplayed()
+        }
+    }
+
+    @Test
+    fun whenAUserIsFavorite_whenTappingFavoriteIcon_thenTheyAreRemovedAsFavoriteUser() {
+        dependencies.responseQueue.add(
+            MockResponse(
+                "/2.2/users",
+                { scope ->
+                    scope.respond(
+                        content = Fixtures.topUsersJson.raw,
+                        status = HttpStatusCode.OK,
+                        headers = headersOf(HttpHeaders.ContentType, "application/json")
+                    )
+                }
+            )
+        )
+
+        ActivityScenario.launch(PixelActivity::class.java).use {
+            composeTestRule
+                .onNodeWithTag("loading_content")
+                .assertIsDisplayed()
+
+            composeTestRule.waitUntilExactlyOneExists(
+                hasTestTag("loaded_content"),
+                timeoutMillis = 3000
+            )
+
+            composeTestRule.onAllNodes(
+                SemanticsMatcher.expectValue(
+                    CustomTestTag,
+                    "not_favorite_toggle"
+                )
+            )
+                .assertCountEquals(5)
+
+            composeTestRule
+                .onNodeWithTag("11683_toggle")
+                .performClick()
+
+
+            composeTestRule.onAllNodes(
+                SemanticsMatcher.expectValue(
+                    CustomTestTag,
+                    "not_favorite_toggle"
+                )
+            )
+                .assertCountEquals(4)
+
+            composeTestRule
+                .onNodeWithTag("11683_favorite")
+                .isDisplayed()
+
+            composeTestRule
+                .onNodeWithTag("11683_toggle")
+                .performClick()
+
+            composeTestRule
+                .onNodeWithTag("11683_not_favorite")
+                .isDisplayed()
+
+            composeTestRule.onAllNodes(
+                SemanticsMatcher.expectValue(
+                    CustomTestTag,
+                    "not_favorite_toggle"
+                )
+            )
+                .assertCountEquals(5)
         }
     }
 }
