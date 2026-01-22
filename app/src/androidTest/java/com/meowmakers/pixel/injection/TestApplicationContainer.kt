@@ -2,6 +2,8 @@ package com.meowmakers.pixel.injection
 
 import android.app.Instrumentation
 import com.meowmakers.pixel.TestPixelApplication
+import com.meowmakers.pixel.data.data_sources.persistence.InMemoryPersistence
+import com.meowmakers.pixel.data.data_sources.persistence.Persistence
 import com.meowmakers.pixel.data.data_sources.rest.KtorRestClient
 import com.meowmakers.pixel.data.data_sources.rest.RestClient
 import com.meowmakers.pixel.data.repositories.StackOverflowRepositoryImpl
@@ -54,8 +56,12 @@ class TestApplicationContainer : ApplicationContainer {
         )
     }
 
+    private val persistence: Persistence by lazy {
+        InMemoryPersistence()
+    }
+
     override val repository: StackOverflowRepository by lazy {
-        StackOverflowRepositoryImpl(restClient)
+        StackOverflowRepositoryImpl(persistence = persistence, restClient = restClient)
     }
 
     override val getTopUsersUseCase: GetTopUsersUseCase by lazy {

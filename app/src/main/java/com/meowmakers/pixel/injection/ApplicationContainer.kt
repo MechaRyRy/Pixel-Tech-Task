@@ -1,8 +1,11 @@
 package com.meowmakers.pixel.injection
 
+import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import com.meowmakers.pixel.PixelApplication
+import com.meowmakers.pixel.data.data_sources.persistence.Persistence
+import com.meowmakers.pixel.data.data_sources.persistence.SharedPreferencesPersistence
 import com.meowmakers.pixel.data.data_sources.rest.KtorRestClient
 import com.meowmakers.pixel.data.data_sources.rest.RestClient
 import com.meowmakers.pixel.data.repositories.StackOverflowRepositoryImpl
@@ -22,7 +25,7 @@ interface ApplicationContainer {
     val loadProfileImageUseCase: LoadProfileImageUseCase
 }
 
-class ProdApplicationContainer : ApplicationContainer {
+class ProdApplicationContainer(applicationContext: Context) : ApplicationContainer {
 
     private val okHttpInstance: OkHttpClient by lazy {
         OkHttpClient()
@@ -47,8 +50,14 @@ class ProdApplicationContainer : ApplicationContainer {
         )
     }
 
+    private val persistence: Persistence by lazy {
+        val sharedPreferences =
+            applicationContext.getSharedPreferences("persistence", Context.MODE_PRIVATE)
+        SharedPreferencesPersistence(sharedPreferences = sharedPreferences)
+    }
+
     override val repository: StackOverflowRepository by lazy {
-        StackOverflowRepositoryImpl(restClient)
+        StackOverflowRepositoryImpl(persistence = persistence, restClient = restClient)
     }
 
     override val getTopUsersUseCase: GetTopUsersUseCase by lazy {
@@ -61,5 +70,4 @@ class ProdApplicationContainer : ApplicationContainer {
 }
 
 val AppContainer: ApplicationContainer
-    @Composable
-    get() = (LocalContext.current.applicationContext as PixelApplication).container
+    @Composable get() = (LocalContext.current.applicationContext as PixelApplication).container

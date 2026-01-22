@@ -6,6 +6,6 @@ import com.meowmakers.pixel.injection.ProdApplicationContainer
 
 open class PixelApplication : Application() {
     open val container: ApplicationContainer by lazy {
-        ProdApplicationContainer()
+        ProdApplicationContainer(applicationContext)
     }
 }
