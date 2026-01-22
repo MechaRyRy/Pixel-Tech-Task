@@ -18,6 +18,7 @@ import io.ktor.client.engine.mock.MockRequestHandleScope
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.HttpResponseData
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.coroutines.delay
 import kotlinx.serialization.json.Json
 
 class MockResponse(
@@ -31,6 +32,7 @@ class TestApplicationContainer : ApplicationContainer {
 
     private val mockEngine: MockEngine by lazy {
         MockEngine { request ->
+            delay(1000)
             val mockResponse = responseQueue.removeFirstOrNull()
             when (request.url.encodedPath) {
                 mockResponse?.forPath -> {
