@@ -1,6 +1,7 @@
 # Readme
 
 ## TODO
+
 - Add an app bar.
 
 ## Dependency Assumptions
@@ -64,7 +65,18 @@ icons.
             - Error Screen State UI
 
 - **Domain**
+    - Entities - Business models. What we want to display / perform business logic on before giving
+      to the UI layer to render or to the repository layer to do other stuff with. 
+    - Repositories - Loads data from various data sources to create the domain model required by the
+      contract. I have seen repositories that either focus on one model e.g. User or on the API e.g.
+      Stackoverflow
+    - Usecases - Breaks down business logic into reusable components, smaller components. In my
+      experience of clean architecture I have seen this just become a proxy layer to the repo
 - **Data**
+    - data_sources - Contains the various data sources used to communicate outside of our system
+       - rest
+       - persistence
+    - repositories - implements the contract from domain
 
 ### Notable Decisions
 
@@ -91,4 +103,5 @@ implemented tests over the whole system.
 For unit / UI tests everything is real except for the system boundaries of the application. There's
 a custom Android test runner that deliberately switches the manual dependency injection graph to a
 Test implementation that mocks the internals of the ktor rest client. I've also introduced a dequeue
-mechanism to the test dependency graph developers can state what response they want for a given request.
+mechanism to the test dependency graph developers can state what response they want for a given
+request.
