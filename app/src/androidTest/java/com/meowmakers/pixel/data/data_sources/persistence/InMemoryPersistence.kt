@@ -7,7 +7,8 @@ import kotlinx.coroutines.flow.asSharedFlow
 class InMemoryPersistence() : Persistence {
 
     val favorites: MutableList<String> = mutableListOf()
-    val _idFlow = MutableStateFlow<List<String>>(favorites)
+
+    private val idFlow = MutableStateFlow<List<String>>(emptyList())
 
     override suspend fun addFavorite(id: String) {
         favorites.add(id)
@@ -19,7 +20,7 @@ class InMemoryPersistence() : Persistence {
         persistChanges()
     }
 
-    private suspend fun persistChanges() = _idFlow.emit(favorites)
+    private suspend fun persistChanges() = idFlow.emit(favorites.toList())
 
-    override fun observeFavorites(): Flow<List<String>> = _idFlow.asSharedFlow()
+    override fun observeFavorites(): Flow<List<String>> = idFlow.asSharedFlow()
 }
