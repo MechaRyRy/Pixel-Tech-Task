@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.meowmakers.pixel
 
 import android.os.Bundle
@@ -7,7 +9,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.meowmakers.pixel.presentation.screens.top_users.ui.TopUsersScreen
@@ -30,7 +35,10 @@ class PixelActivity : ComponentActivity() {
 @Composable
 fun PixelApplication(content: @Composable (PaddingValues) -> Unit) {
     PixelTheme {
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            topBar = { TopAppBar({ Text("Pixel Demo") }) }
+        ) { innerPadding ->
             content(innerPadding)
         }
     }
