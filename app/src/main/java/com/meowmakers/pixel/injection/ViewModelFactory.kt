@@ -9,7 +9,10 @@ class ViewModelFactory(private val container: ApplicationContainer) : ViewModelP
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(TopUsersViewModel::class.java)) {
-            return TopUsersViewModel(container.getTopUsersUseCase) as T
+            return TopUsersViewModel(
+                observeTopUsersUseCase = container.observeTopUsersUseCase,
+                fetchTopUsersUseCase = container.fetchTopUsersUseCase
+            ) as T
         }
 
         if (modelClass.isAssignableFrom(NetworkImageViewModel::class.java)) {

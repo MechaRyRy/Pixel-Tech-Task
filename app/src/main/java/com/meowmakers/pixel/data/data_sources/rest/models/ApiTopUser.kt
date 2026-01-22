@@ -15,12 +15,12 @@ data class ApiTopUser(
     val reputation: Int
 )
 
-fun ApiTopUser.toTopUser(): TopUser {
+fun ApiTopUser.toTopUser(following: Boolean): TopUser {
     return TopUser(
-        id = id,
+        id = "$id",
         profileImageLink = profileImageLink,
         name = name,
         reputation = reputation,
-        following = false
+        following = following
     )
 }

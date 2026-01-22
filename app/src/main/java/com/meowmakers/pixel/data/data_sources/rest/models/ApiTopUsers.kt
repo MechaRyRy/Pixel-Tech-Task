@@ -6,8 +6,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ApiTopUsers(val items: List<ApiTopUser>)
 
-fun ApiTopUsers.toTopUsers(): TopUsers {
+fun ApiTopUsers.toTopUsers(favorites: List<String>): TopUsers {
     return TopUsers(this.items.map {
-        it.toTopUser()
+        it.toTopUser(following = favorites.contains("${it.id}"))
     })
 }

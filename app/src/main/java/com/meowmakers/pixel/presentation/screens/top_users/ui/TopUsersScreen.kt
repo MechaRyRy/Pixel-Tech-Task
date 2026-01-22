@@ -26,7 +26,7 @@ fun TopUsersScreen(
     TopUsersScreenContent(
         modifier,
         state,
-        onRetry = { userViewModel.loadData() },
+        onRetry = { userViewModel.retry() },
         loadImage = { imageLoaderViewModel.getImage(it) }
     )
 }
