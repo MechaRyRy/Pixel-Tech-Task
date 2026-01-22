@@ -117,4 +117,9 @@ to ship fast, high quality code.
 
 Data moves in a single, predictable direction through the application making it easier for
 developers to track, debug and manage state changes. Events, such as `retry` flow up to the
-repository layer and state flows back down through `observable` `Flow` pipes. 
+repository layer and state flows back down through `observable` `Flow` pipes.
+
+#### Navigation
+
+Usually I would add a Nav controller and add additional routes, but given this is a single screen
+application I have just coded so that it opens that screen only.
