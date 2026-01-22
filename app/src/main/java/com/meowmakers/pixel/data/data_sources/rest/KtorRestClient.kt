@@ -4,6 +4,7 @@ import android.net.Uri
 import io.ktor.client.HttpClient
 import io.ktor.client.request.headers
 import io.ktor.client.request.request
+import io.ktor.client.statement.readRawBytes
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.util.reflect.TypeInfo
@@ -38,11 +39,17 @@ class KtorRestClient(
                     is Body.None -> {}
                 }
             }
-            val typeInfo = TypeInfo(
-                type = kType.classifier as KClass<*>,
-                kotlinType = kType
-            )
-            return RestResponse.Success(response.call.body(typeInfo) as T)
+
+            return if (kType.classifier == ByteArray::class) {
+                val bytes = response.readRawBytes()
+                RestResponse.Success(bytes as T)
+            } else {
+                val typeInfo = TypeInfo(
+                    type = kType.classifier as KClass<*>,
+                    kotlinType = kType
+                )
+                RestResponse.Success(response.call.body(typeInfo) as T)
+            }
         } catch (e: Exception) {
             return RestResponse.Failure(error = e)
         }
