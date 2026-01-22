@@ -11,9 +11,13 @@ import com.meowmakers.pixel.data.data_sources.rest.RestClient
 import com.meowmakers.pixel.data.repositories.StackOverflowRepositoryImpl
 import com.meowmakers.pixel.domain.repositories.StackOverflowRepository
 import com.meowmakers.pixel.domain.usecases.FetchTopUsersUseCase
+import com.meowmakers.pixel.domain.usecases.FetchTopUsersUseCaseImpl
 import com.meowmakers.pixel.domain.usecases.LoadProfileImageUseCase
+import com.meowmakers.pixel.domain.usecases.LoadProfileImageUseCaseImpl
 import com.meowmakers.pixel.domain.usecases.ObserveTopUsersUseCase
+import com.meowmakers.pixel.domain.usecases.ObserveTopUsersUseCaseImpl
 import com.meowmakers.pixel.domain.usecases.ToggleFavoriteUseCase
+import com.meowmakers.pixel.domain.usecases.ToggleFavoriteUseCaseImpl
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -65,19 +69,19 @@ class ProdApplicationContainer(applicationContext: Context) : ApplicationContain
     }
 
     override val fetchTopUsersUseCase: FetchTopUsersUseCase by lazy {
-        FetchTopUsersUseCase(repository)
+        FetchTopUsersUseCaseImpl(repository)
     }
 
     override val observeTopUsersUseCase: ObserveTopUsersUseCase by lazy {
-        ObserveTopUsersUseCase(repository)
+        ObserveTopUsersUseCaseImpl(repository)
     }
 
     override val loadProfileImageUseCase: LoadProfileImageUseCase by lazy {
-        LoadProfileImageUseCase(repository)
+        LoadProfileImageUseCaseImpl(repository)
     }
 
     override val toggleFavoriteUseCase: ToggleFavoriteUseCase by lazy {
-        ToggleFavoriteUseCase(repository)
+        ToggleFavoriteUseCaseImpl(repository)
     }
 }
 

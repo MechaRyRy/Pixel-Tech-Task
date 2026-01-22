@@ -2,8 +2,13 @@ package com.meowmakers.pixel.domain.usecases
 
 import com.meowmakers.pixel.domain.repositories.StackOverflowRepository
 
-class FetchTopUsersUseCase(private val repository: StackOverflowRepository) {
+interface FetchTopUsersUseCase {
+    suspend fun fetch()
+}
 
-    suspend fun fetch(): Unit = repository.fetchTopUsers()
+class FetchTopUsersUseCaseImpl(private val repository: StackOverflowRepository) :
+    FetchTopUsersUseCase {
+
+    override suspend fun fetch(): Unit = repository.fetchTopUsers()
 
 }

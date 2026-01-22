@@ -8,13 +8,7 @@
       <SelectionState runConfigName="showsLoaded_whenFetchingIsSuccessful() (1)">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="showsError_whenFetchingIsUnsuccessful()">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
       <SelectionState runConfigName="TopUsersScreenTest (1)">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
-      <SelectionState runConfigName="showsLoadingSpinner()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
       <SelectionState runConfigName="tappingAnUnfavoritedUser_willAddItAsFavorited()">
