@@ -3,6 +3,7 @@
 package com.meowmakers.pixel.presentation.screens
 
 import androidx.compose.ui.test.ExperimentalTestApi
+import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasTestTag
@@ -19,6 +20,7 @@ import com.meowmakers.pixel.injection.MockResponse
 import com.meowmakers.pixel.injection.TestApplicationContainer
 import com.meowmakers.pixel.injection.dependencies
 import com.meowmakers.pixel.injection.reset
+import com.meowmakers.pixel.presentation.screens.top_users.ui.CustomTestTag
 import io.ktor.client.engine.mock.respond
 import io.ktor.client.engine.mock.respondError
 import io.ktor.http.HttpHeaders
@@ -144,6 +146,58 @@ class TopUsersScreenTest {
 
             composeTestRule.onAllNodesWithTag("user_item")
                 .assertCountEquals(5)
+        }
+    }
+
+    @Test
+    fun tappingAnUnfavoritedUser_willAddItAsFavorited() {
+        dependencies.responseQueue.add(
+            MockResponse(
+                "/2.2/users",
+                { scope ->
+                    scope.respond(
+                        content = Fixtures.topUsersJson.raw,
+                        status = HttpStatusCode.OK,
+                        headers = headersOf(HttpHeaders.ContentType, "application/json")
+                    )
+                }
+            )
+        )
+
+        ActivityScenario.launch(PixelActivity::class.java).use {
+            composeTestRule
+                .onNodeWithTag("loading_content")
+                .assertIsDisplayed()
+
+            composeTestRule.waitUntilExactlyOneExists(
+                hasTestTag("loaded_content"),
+                timeoutMillis = 3000
+            )
+
+            composeTestRule.onAllNodes(
+                SemanticsMatcher.expectValue(
+                    CustomTestTag,
+                    "not_favorite_toggle"
+                )
+            )
+                .assertCountEquals(5)
+
+            composeTestRule
+                .onNodeWithTag("11683_toggle")
+                .performClick()
+
+
+            composeTestRule.onAllNodes(
+                SemanticsMatcher.expectValue(
+                    CustomTestTag,
+                    "not_favorite_toggle"
+                )
+            )
+                .assertCountEquals(4)
+
+            composeTestRule
+                .onNodeWithTag("11683_favorite")
+                .isDisplayed()
         }
     }
 }

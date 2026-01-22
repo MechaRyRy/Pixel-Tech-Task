@@ -21,6 +21,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.SemanticsPropertyKey
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.meowmakers.pixel.Fixtures
@@ -33,6 +35,8 @@ import com.meowmakers.pixel.presentation.design_system.network_image.NetworkImag
 import com.meowmakers.pixel.presentation.screens.top_users.view_models.TopUsersScreenState
 
 typealias ToggleFavorite = (id: String, currentValue: Boolean) -> Unit
+
+val CustomTestTag = SemanticsPropertyKey<String>("CustomTestTag")
 
 @Composable
 fun LoadedContent(
@@ -69,12 +73,14 @@ fun LoadedContent(
 
                     Column {
                         Text(
+                            modifier = Modifier.testTag("${item.id}_name"),
                             text = item.name,
                             style = MaterialTheme.typography.labelLarge,
                             color = MaterialTheme.colorScheme.primary,
                         )
 
                         Text(
+                            modifier = Modifier.testTag("${item.id}_reputation"),
                             text = "${item.reputation}",
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.secondary,
@@ -84,17 +90,29 @@ fun LoadedContent(
                     Spacer(modifier = Modifier.weight(1f))
 
                     FilledIconToggleButton(
+                        modifier = Modifier
+                            .testTag("${item.id}_toggle"),
                         checked = item.following,
                         onCheckedChange = { toggleFavorite(item.id, item.following) },
                         content = {
                             if (item.following) {
                                 Icon(
-                                    Icons.Filled.Favorite,
+                                    modifier = Modifier
+                                        .testTag("${item.id}_favorite")
+                                        .semantics {
+                                            this[CustomTestTag] = "favorite_toggle"
+                                        },
+                                    imageVector = Icons.Filled.Favorite,
                                     contentDescription = "Localized description"
                                 )
                             } else {
                                 Icon(
-                                    Icons.Outlined.FavoriteBorder,
+                                    modifier = Modifier
+                                        .testTag("${item.id}_not_favorite")
+                                        .semantics {
+                                            this[CustomTestTag] = "not_favorite_toggle"
+                                        },
+                                    imageVector = Icons.Outlined.FavoriteBorder,
                                     contentDescription = "Localized description"
                                 )
                             }
