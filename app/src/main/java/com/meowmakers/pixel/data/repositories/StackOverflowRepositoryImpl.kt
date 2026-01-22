@@ -16,4 +16,11 @@ class StackOverflowRepositoryImpl(private val restClient: RestClient) : StackOve
             is RestResponse.Success<TopUsers> -> Result.success(response.value)
         }
     }
+
+    override suspend fun getProfileImage(url: String): Result<ByteArray> {
+        return when (val response = restClient.request<ByteArray>(uri = url.toUri())) {
+            is RestResponse.Failure<ByteArray> -> Result.failure(response.error)
+            is RestResponse.Success<ByteArray> -> Result.success(response.value)
+        }
+    }
 }

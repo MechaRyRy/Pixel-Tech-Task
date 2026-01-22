@@ -19,7 +19,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 
-typealias LoadImageCallback = (String) -> Bitmap?
+typealias LoadImageCallback = suspend (String) -> Bitmap?
 
 @Composable
 fun NetworkImage(modifier: Modifier, url: String, loadImage: LoadImageCallback) {

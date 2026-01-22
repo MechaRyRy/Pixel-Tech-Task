@@ -13,7 +13,7 @@ class ViewModelFactory(private val container: ApplicationContainer) : ViewModelP
         }
 
         if (modelClass.isAssignableFrom(NetworkImageViewModel::class.java)) {
-            return NetworkImageViewModel() as T
+            return NetworkImageViewModel(container.loadProfileImageUseCase) as T
         }
 
         throw IllegalArgumentException("Unknown ViewModel class")

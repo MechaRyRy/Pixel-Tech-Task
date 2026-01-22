@@ -7,6 +7,7 @@ import com.meowmakers.pixel.data.data_sources.rest.RestClient
 import com.meowmakers.pixel.data.repositories.StackOverflowRepositoryImpl
 import com.meowmakers.pixel.domain.repositories.StackOverflowRepository
 import com.meowmakers.pixel.domain.usecases.GetTopUsersUseCase
+import com.meowmakers.pixel.domain.usecases.LoadProfileImageUseCase
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.MockRequestHandleScope
@@ -61,6 +62,9 @@ class TestApplicationContainer : ApplicationContainer {
         GetTopUsersUseCase(repository)
     }
 
+    override val loadProfileImageUseCase: LoadProfileImageUseCase by lazy {
+        LoadProfileImageUseCase(repository)
+    }
 }
 
 fun Instrumentation.dependencies(): TestApplicationContainer {
