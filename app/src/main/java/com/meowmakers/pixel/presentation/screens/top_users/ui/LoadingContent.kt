@@ -31,7 +31,8 @@ fun PreviewLoadingContent(
         TopUsersScreenContent(
             modifier = Modifier.padding(innerPadding),
             state = TopUsersScreenState.Loading,
-            onRetry = {}
+            onRetry = {},
+            loadImage = { null }
         )
     }
 }

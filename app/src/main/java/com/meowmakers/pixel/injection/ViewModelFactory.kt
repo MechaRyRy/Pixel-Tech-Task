@@ -2,6 +2,7 @@ package com.meowmakers.pixel.injection
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.meowmakers.pixel.presentation.design_system.network_image.NetworkImageViewModel
 import com.meowmakers.pixel.presentation.screens.top_users.view_models.TopUsersViewModel
 
 class ViewModelFactory(private val container: ApplicationContainer) : ViewModelProvider.Factory {
@@ -10,6 +11,11 @@ class ViewModelFactory(private val container: ApplicationContainer) : ViewModelP
         if (modelClass.isAssignableFrom(TopUsersViewModel::class.java)) {
             return TopUsersViewModel(container.getTopUsersUseCase) as T
         }
+
+        if (modelClass.isAssignableFrom(NetworkImageViewModel::class.java)) {
+            return NetworkImageViewModel() as T
+        }
+
         throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

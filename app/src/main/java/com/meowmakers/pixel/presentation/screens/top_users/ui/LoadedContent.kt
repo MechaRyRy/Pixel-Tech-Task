@@ -28,10 +28,16 @@ import com.meowmakers.pixel.PixelApplication
 import com.meowmakers.pixel.domain.entities.TopUser
 import com.meowmakers.pixel.domain.entities.TopUsers
 import com.meowmakers.pixel.load
+import com.meowmakers.pixel.presentation.design_system.network_image.LoadImageCallback
+import com.meowmakers.pixel.presentation.design_system.network_image.NetworkImage
 import com.meowmakers.pixel.presentation.screens.top_users.view_models.TopUsersScreenState
 
 @Composable
-fun LoadedContent(modifier: Modifier, items: List<TopUser>) {
+fun LoadedContent(
+    modifier: Modifier,
+    items: List<TopUser>,
+    loadImage: LoadImageCallback
+) {
     LazyColumn(modifier.testTag("loaded_content")) {
         items(count = items.size, key = { items[it].id }, itemContent = { index ->
             val item = items[index]
@@ -50,14 +56,10 @@ fun LoadedContent(modifier: Modifier, items: List<TopUser>) {
                 ) {
                     Spacer(Modifier.width(16.dp))
 
-                    Box(
-                        Modifier
-                            .size(48.dp)
-                            .clip(RoundedCornerShape(8.dp))
-                            .border(
-                                BorderStroke(2.dp, MaterialTheme.colorScheme.outlineVariant),
-                                RoundedCornerShape(8.dp)
-                            )
+                    NetworkImage(
+                        modifier = Modifier,
+                        url = item.profileImageLink,
+                        loadImage = loadImage
                     )
 
                     Spacer(Modifier.width(12.dp))
@@ -90,7 +92,8 @@ fun PreviewLoadedContent(
         TopUsersScreenContent(
             modifier = Modifier.padding(innerPadding),
             state = TopUsersScreenState.Loaded(users),
-            onRetry = {}
+            onRetry = {},
+            loadImage = { null }
         )
     }
 }
