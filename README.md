@@ -123,3 +123,11 @@ repository layer and state flows back down through `observable` `Flow` pipes.
 
 Usually I would add a Nav controller and add additional routes, but given this is a single screen
 application I have just coded so that it opens that screen only.
+
+#### Persistence
+
+You are probably surprised to see `SharedPreferences`, but given that the data we need to persist is
+super simple it would be overkill at this point to start working with a DB. You could create
+another implementation of the `Persistence` contract focussed on a DB implementation. You could also
+introduce a delegate `Persistence` such that you could delegate some calls to one implementation and
+other calls to another.
