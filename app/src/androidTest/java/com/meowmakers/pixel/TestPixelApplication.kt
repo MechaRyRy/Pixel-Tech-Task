@@ -4,5 +4,9 @@ import com.meowmakers.pixel.injection.ApplicationContainer
 import com.meowmakers.pixel.injection.TestApplicationContainer
 
 class TestPixelApplication : PixelApplication() {
-    override val container: ApplicationContainer = TestApplicationContainer()
+    override var container: ApplicationContainer = TestApplicationContainer()
+
+    fun resetContainer() {
+        container = TestApplicationContainer()
+    }
 }

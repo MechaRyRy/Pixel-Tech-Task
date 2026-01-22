@@ -16,7 +16,7 @@ import com.meowmakers.pixel.presentation.screens.top_users.view_models.TopUsersS
 fun LoadingContent(modifier: Modifier) {
     Box(
         modifier = modifier.fillMaxSize()
-            .testTag("loading_spinner"),
+            .testTag("loading_content"),
         contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator()

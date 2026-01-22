@@ -90,3 +90,9 @@ fun Instrumentation.dependencies(): TestApplicationContainer {
     val app = appContext as TestPixelApplication
     return app.container as TestApplicationContainer
 }
+
+fun Instrumentation.reset() {
+    val appContext = targetContext.applicationContext
+    val app = appContext as TestPixelApplication
+    app.resetContainer()
+}
