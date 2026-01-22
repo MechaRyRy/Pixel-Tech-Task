@@ -1,9 +1,5 @@
 # Readme
 
-## TODO
-
-- Add an app bar.
-
 ## Dependency Assumptions
 
 > No 3rd party frameworks - we want to see what you can do!
@@ -96,22 +92,15 @@ to deal with different states.
 
 > Your code should be covered by unit tests.
 
-This application is predominantly tested using Android UI tests, I have included a couple of "unit
-tests" to demonstrate how they differ from an Android UI test, but for brevity I have not
-implemented tests over the whole system.
-
-For unit / UI tests everything is real except for the system boundaries of the application. There's
+**UI Tests:** Everything is real except for the system boundaries of the application. There's
 a custom Android test runner that deliberately switches the manual dependency injection graph to a
 Test implementation that mocks the internals of the ktor rest client. I've also introduced a dequeue
 mechanism to the test dependency graph developers can state what response they want for a given
 request.
 
-> But you haven't done a unit test because it does not test the smallest unit
-
-Isn't this the debate of all time 😅 what constitutes a unit. I would just say that you make the
-architecture and patterns work for you, not the other way around. If you can test your application
-in the simplest way whilst covering all edge cases then you do it however works best and allows you
-to ship fast, high quality code.
+**Unit Tests:** I have deliberately not added unit tests across the whole application because of the
+UI tests that cover pretty much all requirements. I have added interfaces over the `UseCases` to
+demonstrate how unit testing can be done without using a mocking library like mockk or mockito.
 
 #### Unidirectional Data Flow
 

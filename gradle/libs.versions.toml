@@ -10,7 +10,6 @@ activityCompose = "1.12.2"
 composeBom = "2025.12.01"
 navigationCompose = "2.9.6"
 ktor = "3.3.3"
-ksp = "2.1.0-1.0.29"
 kotlinx = "1.9.0"
 uiTestJunit4 = "1.10.1"
 
@@ -42,6 +41,7 @@ ktor-serialization = { group = "io.ktor", name = "ktor-serialization-kotlinx-jso
 ktor-mock = { group = "io.ktor", name = "ktor-client-mock-jvm", version.ref = "ktor" }
 
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx" }
+kotlinx-unit-tests = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
