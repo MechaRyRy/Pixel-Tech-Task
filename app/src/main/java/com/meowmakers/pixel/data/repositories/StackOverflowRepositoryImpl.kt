@@ -4,6 +4,8 @@ import androidx.core.net.toUri
 import com.meowmakers.pixel.data.data_sources.persistence.Persistence
 import com.meowmakers.pixel.data.data_sources.rest.RestClient
 import com.meowmakers.pixel.data.data_sources.rest.RestResponse
+import com.meowmakers.pixel.data.data_sources.rest.models.ApiTopUsers
+import com.meowmakers.pixel.data.data_sources.rest.models.toTopUsers
 import com.meowmakers.pixel.domain.entities.TopUsers
 import com.meowmakers.pixel.domain.repositories.StackOverflowRepository
 
@@ -12,12 +14,14 @@ class StackOverflowRepositoryImpl(
     private val restClient: RestClient
 ) : StackOverflowRepository {
     override suspend fun getTopUsers(): Result<TopUsers> {
-        val response = restClient.request<TopUsers>(
+        val response = restClient.request<ApiTopUsers>(
             uri = "https://api.stackexchange.com/2.2/users?page=1&pagesize=20&order=desc&sort=reputation&site=stackoverflow".toUri()
         )
         return when (response) {
-            is RestResponse.Failure<TopUsers> -> Result.failure(response.error)
-            is RestResponse.Success<TopUsers> -> Result.success(response.value)
+            is RestResponse.Failure<ApiTopUsers> -> Result.failure(response.error)
+            is RestResponse.Success<ApiTopUsers> -> Result.success(
+                response.value.toTopUsers()
+            )
         }
     }
 

@@ -1,10 +1,13 @@
 # Readme
 
+## TODO
+- Add an app bar.
+
 ## Dependency Assumptions
 
 > No 3rd party frameworks - we want to see what you can do!
 
-I've assumed that the following are ok based on the tech task:
+I've assumed that the following are ok based on the t ech task:
 
 **Kotlin Standard Library:** Since the test specifically asks for Kotlin, use of Coroutines for
 background threading and Flow for data streams should be allowed.
