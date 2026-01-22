@@ -1,25 +1,29 @@
 package com.meowmakers.pixel.presentation.screens.top_users.ui
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Card
+import androidx.compose.material3.FilledIconToggleButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -40,6 +44,7 @@ fun LoadedContent(
 ) {
     LazyColumn(modifier.testTag("loaded_content")) {
         items(count = items.size, key = { items[it].id }, itemContent = { index ->
+            var isLiked by remember { mutableStateOf(false) }
             val item = items[index]
             Spacer(Modifier.height(20.dp))
             Card(
@@ -64,18 +69,35 @@ fun LoadedContent(
 
                     Spacer(Modifier.width(12.dp))
 
-                    Text(
-                        text = item.name,
-                        style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.weight(1f)
-                    )
+                    Column {
+                        Text(
+                            text = item.name,
+                            style = MaterialTheme.typography.labelLarge,
+                            color = MaterialTheme.colorScheme.primary,
+                        )
 
-                    Text(
-                        text = "${item.reputation}",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.secondary,
-                    )
+                        Text(
+                            text = "${item.reputation}",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.secondary,
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    FilledIconToggleButton(checked = isLiked, onCheckedChange = { isLiked = it }) {
+                        if (isLiked) {
+                            Icon(
+                                Icons.Filled.Favorite,
+                                contentDescription = "Localized description"
+                            )
+                        } else {
+                            Icon(
+                                Icons.Outlined.FavoriteBorder,
+                                contentDescription = "Localized description"
+                            )
+                        }
+                    }
                 }
             }
         })
